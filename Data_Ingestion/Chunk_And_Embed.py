@@ -5,10 +5,14 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 from dotenv import load_dotenv
 
+from load_documents import load_pdfs, load_html
+from chunk_documents import chunk_docs
+from embed_and_store import embed_and_save
+
 load_dotenv()
 
 #Load the document
-loader = PyPDFLOader("epa_climate_plan.pdf")
+loader = PyPDFLoader("epa_climate_plan.pdf")
 docs = loader.load()
 
 #Chunk it 
