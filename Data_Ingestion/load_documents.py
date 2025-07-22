@@ -1,5 +1,5 @@
 #Handles reading PDF and HTML into raw text 
-from langchain.document_loaders import PyPDFLoader, UnstructuredHTMLLoader
+from langchain_community.document_loaders import PyPDFLoader, UnstructuredHTMLLoader
 from pathlib import Path
 
 def load_pdfs(pdf_dir):

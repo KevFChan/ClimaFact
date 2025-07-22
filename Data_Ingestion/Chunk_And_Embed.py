@@ -1,25 +1,25 @@
 import os
-from langchain.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings import OpenAIEmbeddings
-from langchain.vectorstores import FAISS
+from langchain_openai.embeddings import OpenAIEmbeddings
+from langchain_community.vectorstores import FAISS
 from dotenv import load_dotenv
 
 from load_documents import load_pdfs, load_html
 from chunk_documents import chunk_docs
 from embed_and_store import embed_and_save
 
+#Get the API key
 load_dotenv()
+api_key = os.getenv("OPENAI_API_KEY")
 
 #Load the document
-loader = PyPDFLoader("epa_climate_plan.pdf")
-docs = loader.load()
+pdf_docs = load_pdfs("data/pdf")
+html_docs = load_html("data/html")
+all_docs = pdf_docs + html_docs
 
-#Chunk it 
-splitter = RecursiveCharacterTextSplitter(chunk_size = 1000, chunk_overlap = 200)
-chunks = splitter.split_documents(docs)
+#Chunk them all
+chunks = chunk_docs(all_docs)
 
-#Embed
-embeddings = OpenAIEmbeddings()
-db = FAISS.from_documents(chunks, embeddings)
-db.save_local("faiss_index")
+#Embed and store them
+embed_and_save(chunks, api_key = api_key)
