@@ -2,8 +2,8 @@
 venv/
 __pycache__/
 *.pyc
-/data/
-/vectorstore/
+data/
+vectorstore/
 *.faiss
 *.pkl
 
