@@ -1,7 +1,7 @@
 import os
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_openai.embeddings import OpenAIEmbeddings
+#from langchain_openai.embeddings import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from dotenv import load_dotenv
 
@@ -10,16 +10,22 @@ from chunk_documents import chunk_docs
 from embed_and_store import embed_and_save
 
 #Get the API key
-load_dotenv()
-api_key = os.getenv("OPENAI_API_KEY")
+# load_dotenv()
+# api_key = os.getenv("OPENAI_API_KEY")
 
 #Load the document
-pdf_docs = load_pdfs("data/pdf")
+pdf_docs = load_pdfs("data/pdfs")
 html_docs = load_html("data/html")
 all_docs = pdf_docs + html_docs
 
+print(f"Loaded {len(pdf_docs)} PDF docs")
+print(f"Loaded {len(html_docs)} HTML docs")
+print(f"Total raw docs: {len(all_docs)}")
+
 #Chunk them all
 chunks = chunk_docs(all_docs)
+chunks = chunks[:5]
+print(f"Total chunks created: {len(chunks)}")
 
 #Embed and store them
-embed_and_save(chunks, api_key = api_key)
+embed_and_save(chunks)

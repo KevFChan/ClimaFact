@@ -15,7 +15,7 @@ def load_pdfs(pdf_dir):
 
 
 def load_html(html_dir):
-    htmls = list(Path(html_dir).glob("*.pdf"))
+    htmls = list(Path(html_dir).glob("*.html"))
     all_docs = []
     
     for html in htmls:
